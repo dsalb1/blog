@@ -24,6 +24,10 @@ class BlogPost(db.Model):
 	created = db.DateTimeProperty(auto_now_add = True)
 
 
+class MainPage(webapp2.RequestHandler):
+	def get(self):
+		self.redirect('/blog')
+
 class MainBlog(Handler):
 	def get(self):
 		#self.render("blog.html")
@@ -53,18 +57,22 @@ class NewPost(Handler):
 			p = BlogPost(title=title, blogpost=blogpost)
 			p.put()
 
-			self.redirect('/blog')
+			self.redirect('/blog/' + str(p.key().id()))
 		else:
 			error="You need to fill out both fields to post a new entry"
 			self.render("newpost.html", title=title, blogpost=blogpost, error=error)
 
-class ViewPostHandler(webapp2.RequestHandler):
+class ViewPostHandler(Handler):
 	def get(self, id):
-		id = int(id)
-		return BlogPost.get_by_id(id)
+		if BlogPost.get_by_id(int(id)):
+			new_post = BlogPost.get_by_id(int(id))
+			self.render("post.html", post=new_post)
+
+
 
 app = webapp2.WSGIApplication([
+	('/', MainPage),
 	('/blog', MainBlog),
-	('/newpost', NewPost),
+	('/blog/newpost', NewPost),
 	webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
 ], debug=True)

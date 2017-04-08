@@ -3,7 +3,7 @@
 {% block content %}
 
 	{% for blogpost in posts %}
-		<h2><a href="">{{blogpost.title}}</a></h2>
+		<h2><a href='/blog/{{blogpost.key().id()}}'>{{blogpost.title}}</a></h2>
 
 		<p>{{blogpost.blogpost}}</p>
 	{% endfor %}
