@@ -24,16 +24,27 @@ class BlogPost(db.Model):
 	created = db.DateTimeProperty(auto_now_add = True)
 
 
+def get_posts(limit, offset):
+	posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC LIMIT {0} OFFSET {1}".format(limit, offset))
+	return posts
+
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.redirect('/blog')
 
 class MainBlog(Handler):
 	def get(self):
-		#self.render("blog.html")
-		posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC LIMIT 5")
+		page_num = self.request.get("page", 0)
+		page_num = page_num and int(page_num)
+
+		limit = 5
+		offset = 5 * page_num
+		posts = get_posts(limit, offset)
+		post_count = posts.count()
+		#posts = db.GqlQuery("SELECT * FROMogPost ORDER BY created DESC LIMIT 5")
 		
-		self.render('blog.html', posts=posts)
+		self.render('blog.html', posts=posts, page_num = page_num, post_count = post_count)
+
 
 	"""def post(self):
 		title = self.request.get("title")

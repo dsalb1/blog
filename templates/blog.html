@@ -3,9 +3,24 @@
 {% block content %}
 
 	{% for blogpost in posts %}
-		<h2><a href='/blog/{{blogpost.key().id()}}'>{{blogpost.title}}</a></h2>
+		<h2><a  class="post" href='/blog/{{blogpost.key().id()}}'>{{blogpost.title}}</a></h2>
 
 		<p>{{blogpost.blogpost}}</p>
 	{% endfor %}
+
+	<footer>
+	{% if page_num > 0 %}
+		{% set page_num = page_num - 1 %}
+		<a href="/blog?page={{page_num}}">&lt; prev </a>
+		{% if post_count = 5 %}
+			{% set page_num = page_num + 2 %}
+			<a href='/blog?page={{page_num}}'>next &gt; </a>
+		{% endif %}
+	{% else %}
+		{% set page_num = page_num + 1 %}
+		<a href="/blog?page={{page_num}}">next &gt;</a>
+		<!-- <a href='/blog' name="page" value='{{page_num}}'>next &gt; </a> -->
+	{% endif %}
+	</footer>
 
 {% endblock %}

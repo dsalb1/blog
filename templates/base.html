@@ -6,25 +6,91 @@
 	</title>
 	<style type="text/css">
 		body {
-			margin:10px auto 0 auto;
+			padding:0;
+			margin:0 auto 0 auto;
 			width:940px;
 		}
+
+		header {
+			margin:0px;
+			background-color:#6666ff;
+			height:auto;
+			border-bottom: 2px solid black;
+		}
+
+		header h1, header nav {
+			font-family:Arial, Courier, sans-serif;
+			color:white;
+			display:inline-block
+		}
+
+		#title {
+			padding:10px 5px 5px 5px;
+		}
+
+		header nav {
+			padding-top: 2em;
+			float:right;
+		}
+
+		nav a {
+			padding-right:15px;
+			color:white;
+			text-decoration:none;
+		}
+
+		nav a:hover {
+			color:orange;
+		}
+
+		main h2, main p{
+			padding-left:10px;
+		}
+
+		.post {
+			text-decoration:none;
+		}
+
+		.post:hover {
+			color:orange;
+		}
+
 		.error {
 			color:red;
 		}
+
+		footer {
+			margin-top:30px;
+		}
+
+		footer a {
+			font-size:1.1em;
+			padding-left:10px;
+		}
+
+		footer a:hover {
+			color:orange;
+		}
+
 	</style>
+
 </head>
 
 <body>
 
+	<header id="top">
+		<h1 id="title">BLOG</h1>
+		<nav>
+			<a href="/blog">Blog</a>
+			<a href="/blog/newpost">New Post</a>
+		</nav>
+	</header>
 
-	<h1><a href='/blog'>Blog</a></h1>
-
-	<hr>
+	<main>
 
 	{% block content %}
 	{% endblock %}
-
+	</main>
 
 </body>
 </html>
