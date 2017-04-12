@@ -37,12 +37,11 @@ class MainBlog(Handler):
 		page_num = self.request.get("page", 0)
 		page_num = page_num and int(page_num)
 
-		limit = 5
+		page_size = 5
 		offset = 5 * page_num
-		posts = get_posts(limit, offset)
-		post_count = posts.count()
-		#posts = db.GqlQuery("SELECT * FROMogPost ORDER BY created DESC LIMIT 5")
-		
+		posts = get_posts(page_size, offset)
+		post_count = posts.count(offset=offset, limit=page_size)
+		#self.response.write(post_count)
 		self.render('blog.html', posts=posts, page_num = page_num, post_count = post_count)
 
 

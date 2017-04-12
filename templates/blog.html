@@ -12,10 +12,11 @@
 	{% if page_num > 0 %}
 		{% set page_num = page_num - 1 %}
 		<a href="/blog?page={{page_num}}">&lt; prev </a>
-		{% if post_count = 5 %}
+		{% if post_count > 4 %}
 			{% set page_num = page_num + 2 %}
 			<a href='/blog?page={{page_num}}'>next &gt; </a>
 		{% endif %}
+
 	{% else %}
 		{% set page_num = page_num + 1 %}
 		<a href="/blog?page={{page_num}}">next &gt;</a>
